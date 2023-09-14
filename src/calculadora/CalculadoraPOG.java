@@ -5,9 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -267,9 +264,6 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String texto = display.getText();
-				 
-				
 				if(!operadorOuPontoNoFim) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
@@ -321,7 +315,7 @@ public class CalculadoraPOG {
 	}
 
 
-	private void dividirEntreArryas(ArrayList listaNumeros, ArrayList listaOperadores) {
+	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
 		String string = "";
 		for(char c : display.getText().toCharArray()) {
 			int hashCode = Character.hashCode(c);
@@ -347,7 +341,7 @@ public class CalculadoraPOG {
 		}
 	}
 	
-	private void indexOperadores(ArrayList listaNumeros, ArrayList listaOperadores) {
+	private void indexOperadores(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
 		int multIndex = listaOperadores.indexOf('*');
 		int divisaoIndex = listaOperadores.indexOf('/');
 		int somaIndex = listaOperadores.indexOf('+');
@@ -381,7 +375,7 @@ public class CalculadoraPOG {
 		}
 	}
 
-	private double conta(ArrayList listaNumeros, ArrayList listaOperadores, int index) {
+	private double conta(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, int index) {
 		System.out.println(index);
 		double value1 = (double) listaNumeros.get(index);
 		double value2 = (double) listaNumeros.get(index + 1);
