@@ -8,10 +8,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Calculadora01 {
+	private boolean operadorOuPonto = false;
+	private boolean pontoJaColocado = false;
+	private boolean operadorNoFim	= false;
 
 	private JFrame janela 	  = new JFrame("Calculadora");
 	private JPanel pnlDisplay = new JPanel();
@@ -46,7 +50,7 @@ public class Calculadora01 {
 		this.pnlDisplay.setLayout(null);
 		this.display.setBounds(
 				0, 0, 
-				(int) (this.pnlDisplay.getWidth() * 0.75), 
+				(int) (this.pnlDisplay.getWidth() * 0.96), 
 				this.pnlDisplay.getHeight() 
 			);
 		
@@ -106,24 +110,28 @@ public class Calculadora01 {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn1.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn2.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn3.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn4.addActionListener( new ActionListener() {
@@ -136,6 +144,7 @@ public class Calculadora01 {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn6.addActionListener( new ActionListener() {
@@ -148,18 +157,21 @@ public class Calculadora01 {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn8.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		this.btn9.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
+				operadorNoFim = false;
 			}
 		});
 		
@@ -167,8 +179,14 @@ public class Calculadora01 {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				
+				if(operadorNoFim) {
+					return;
+				}
+				
+				
 				if (display.getText().indexOf(".") < 0) {
 					display.setText( display.getText() + label );
+					pontoJaColocado = true;
 				}
 			}
 		});
@@ -178,9 +196,22 @@ public class Calculadora01 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				
+				if(operadorNoFim) {
+					return;
+				}
+				
+				if(operadorOuPonto) {
+					igual();
+					operadorOuPonto = false;
+				}
+				
 				if(!display.getText().endsWith("*")) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
+					operadorNoFim = true;
+					operadorOuPonto = true;
+					pontoJaColocado = false;
 				}
 
 				
@@ -192,9 +223,23 @@ public class Calculadora01 {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				if(operadorNoFim) {
+					return;
+				}
+				
+				if(operadorOuPonto) {
+					igual();
+					operadorOuPonto = false;
+				}
+				
 				if(!display.getText().endsWith("+")) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
+					operadorNoFim = true;
+					operadorOuPonto = true;
+					pontoJaColocado = false;
 				}
 			}
 		});
@@ -204,9 +249,22 @@ public class Calculadora01 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				
+				if(operadorNoFim) {
+					return;
+				}
+				
+				if(operadorOuPonto) {
+					igual();
+					operadorOuPonto = false;
+				}
+				
 				if(!display.getText().endsWith("-")) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
+					operadorNoFim = true;
+					operadorOuPonto = true;
+					pontoJaColocado = false;
 				}
 			}
 		});
@@ -215,10 +273,25 @@ public class Calculadora01 {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				if(operadorNoFim) {
+					return;
+				}
+				
+				if(operadorOuPonto) {
+					igual();
+					operadorOuPonto = false;
+				}
+				
+				
 				String texto = display.getText();
 				if(!texto.endsWith("/")) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
+					operadorNoFim = true;
+					operadorOuPonto = true;
+					pontoJaColocado = false;
 				}
 			}
 		});
@@ -227,14 +300,78 @@ public class Calculadora01 {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String texto = display.getText();
-				int n1 = Integer.parseInt(texto.substring(0, texto.indexOf("*")));
-				int n2 = Integer.parseInt(texto.substring(texto.indexOf("*") + 1));
-				display.setText(String.valueOf((n1 * n2)));
+	
+				if(operadorOuPonto) {
+					igual();
+					operadorOuPonto = false;
+					operadorNoFim = false;
+				}
+			
+					
 			}
+
+
 		});
 		
 		this.janela.add( this.pnlButtons );
 		this.janela.setVisible(true);
+	}
+	
+	private void igual() {
+		
+		String texto = display.getText();
+		int multIndex = texto.indexOf('*');
+		int divIndex = texto.indexOf('/');
+		int somaIndex = texto.indexOf('+');
+		int subIndex = texto.indexOf('-');
+		int index = 0;
+		
+		if(multIndex != -1) {
+			index = multIndex;
+		} else if(divIndex != -1) {
+			index = divIndex;
+		} else if(somaIndex != -1) {
+			index = somaIndex;
+		} else if(subIndex != -1) {
+			index = subIndex;
+		}
+		
+		double n1 = Double.parseDouble(texto.substring(0, index));
+		double n2 = Double.parseDouble(texto.substring(index + 1));
+		System.out.println(index);
+		char c = texto.charAt(index);
+		System.out.println(c);
+		switch(c) {
+			case '*':
+				display.setText(String.valueOf((n1 * n2)));
+				break;
+			case '/':
+				if(n2 == 0) {
+					JOptionPane.showMessageDialog(null, "Encontramos uma divisão por 0, por favor faça outra conta", "Divisao por zero", JOptionPane.WARNING_MESSAGE);
+					display.setText("");
+				}
+				
+				display.setText(String.valueOf((n1 / n2)));
+				break;
+			case '-':
+				display.setText(String.valueOf((n1 - n2)));
+				break;
+				
+			case '+':
+				System.out.println("a");
+				display.setText(String.valueOf((n1 + n2)));
+				break;
+		}
+		
+		String resposta = display.getText();
+		if(resposta.substring(resposta.indexOf('.') + 1).replace("0", "").length() == 0) {
+			int resp = Integer.parseInt(resposta.substring(0, resposta.indexOf('.')));
+			System.out.println(resp);
+			resposta = String.valueOf(resp);
+			System.out.println(resposta);
+			display.setText(resposta);
+		} else {
+			display.setText(resposta);
+		}	
 	}
 }

@@ -16,6 +16,9 @@ import javax.swing.JTextField;
 public class CalculadoraPOG {
 	private boolean operadorOuPontoNoFim = false;
 	private boolean pontoIncluido = false;
+	private boolean numeroNegativo	= false;
+	
+	private int qtdOperadores = 0;
 	
 	private JFrame janela 	  = new JFrame("Calculadora");
 	private JPanel pnlDisplay = new JPanel();
@@ -38,6 +41,9 @@ public class CalculadoraPOG {
 	private JButton btnIgual = new JButton("=");
 	private JButton btnDiv   = new JButton("/");
 	private JButton btnLimpar   = new JButton("c");
+	private JButton btnPotencia   = new JButton("^");
+	private JButton btnAberturaParenteses   = new JButton("(");
+	private JButton btnFechaduraParenteses   = new JButton(")");
 	
 	public CalculadoraPOG() {
 
@@ -89,9 +95,18 @@ public class CalculadoraPOG {
 		this.btnIgual.setFont(defaultFont);
 		this.btnDiv.setFont(defaultFont);
 		this.btnLimpar.setFont(defaultFont);
+		this.btnPotencia.setFont(defaultFont);
+		this.btnAberturaParenteses.setFont(defaultFont);
+		this.btnFechaduraParenteses.setFont(defaultFont);
+		
 		
 		this.pnlButtons.setBackground(Color.RED);
-		this.pnlButtons.setLayout(new GridLayout(4,4));
+		this.pnlButtons.setLayout(new GridLayout(5,4));
+
+		this.pnlButtons.add(btnLimpar);	
+		this.pnlButtons.add(btnPotencia);	
+		this.pnlButtons.add(btnAberturaParenteses);	
+		this.pnlButtons.add(btnFechaduraParenteses);	
 		this.pnlButtons.add(btn7);
 		this.pnlButtons.add(btn8);
 		this.pnlButtons.add(btn9);
@@ -109,11 +124,15 @@ public class CalculadoraPOG {
 		this.pnlButtons.add(btnIgual);
 		this.pnlButtons.add(btnDiv);	
 		
+		
+		
 		this.btn0.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn1.addActionListener( new ActionListener() {
@@ -121,6 +140,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn2.addActionListener( new ActionListener() {
@@ -128,6 +149,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn3.addActionListener( new ActionListener() {
@@ -135,6 +158,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn4.addActionListener( new ActionListener() {
@@ -142,6 +167,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn5.addActionListener( new ActionListener() {
@@ -149,6 +176,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn6.addActionListener( new ActionListener() {
@@ -156,6 +185,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn7.addActionListener( new ActionListener() {
@@ -163,6 +194,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn8.addActionListener( new ActionListener() {
@@ -170,6 +203,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		this.btn9.addActionListener( new ActionListener() {
@@ -177,6 +212,8 @@ public class CalculadoraPOG {
 				String label = ((JButton) e.getSource()).getText();
 				display.setText( display.getText() + label );
 				operadorOuPontoNoFim = false;
+				numeroNegativo = false;
+				qtdOperadores = 0;
 			}
 		});
 		
@@ -195,6 +232,7 @@ public class CalculadoraPOG {
 					display.setText( display.getText() + label );
 					pontoIncluido = true;
 					operadorOuPontoNoFim = true;
+					numeroNegativo = true;
 				}
 //				if (display.getText().indexOf(".") < 0) {
 //				String label = ((JButton) e.getSource()).getText();
@@ -207,11 +245,17 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!operadorOuPontoNoFim) {	
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
 					operadorOuPontoNoFim = true;
 					pontoIncluido = false;
+					qtdOperadores++;
 				}
 //				if(!display.getText().endsWith("*")) {	
 //					String label = ((JButton) e.getSource()).getText();
@@ -227,11 +271,16 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!operadorOuPontoNoFim) {	
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
 					operadorOuPontoNoFim = true;
 					pontoIncluido = false;
+					qtdOperadores++;
 				}
 //				if(!display.getText().endsWith("+")) {	
 //					String label = ((JButton) e.getSource()).getText();
@@ -244,13 +293,21 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(qtdOperadores == 1) {
+					numeroNegativo = false;
+				}
 				
+				if(pontoIncluido) {
+					return;
+				}
 				
-				if(!operadorOuPontoNoFim) {	
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
 					operadorOuPontoNoFim = true;
 					pontoIncluido = false;
+					numeroNegativo = true;
+					qtdOperadores++;
 				}
 				
 //				if(!display.getText().endsWith("-")) {	
@@ -264,7 +321,11 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!operadorOuPontoNoFim) {	
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
 					String label = ((JButton) e.getSource()).getText();
 					display.setText( display.getText() + label );
 					operadorOuPontoNoFim = true;
@@ -274,6 +335,52 @@ public class CalculadoraPOG {
 
 
 		});
+		
+		this.btnPotencia.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
+					String label = ((JButton) e.getSource()).getText();
+					display.setText( display.getText() + label );
+					operadorOuPontoNoFim = true;
+					pontoIncluido = false;
+					qtdOperadores++;
+				}
+//				if(!display.getText().endsWith("+")) {	
+//					String label = ((JButton) e.getSource()).getText();
+//					display.setText( display.getText() + label );
+//				}
+			}
+		});
+		
+		this.btnLimpar.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String texto = display.getText();
+			
+				int tamanho = 0;
+				if(!texto.isEmpty()) {
+					tamanho = texto.length();
+					display.setText(texto.substring(0, tamanho - 1));
+					Character caractereFim = texto.substring(tamanho - 1).toCharArray()[0];
+					int hashCode = caractereFim.hashCode();
+					if(hashCode > 47 || hashCode == 46 ) {
+					
+					} else {
+					
+					}
+				}
+				
+			
+			}
+		});
+		
 		
 		this.btnIgual.addActionListener( new ActionListener() {
 			
@@ -303,28 +410,39 @@ public class CalculadoraPOG {
 		}
 		
 		String resposta = Double.toString(listaNumeros.get(0));
+		System.out.println("Resposta: " + resposta);
 		if(resposta.substring(resposta.indexOf('.') + 1).replace("0", "").length() == 0) {
 			int resp = Integer.parseInt(resposta.substring(0, resposta.indexOf('.')));
 			System.out.println(resp);
+			
 			resposta = String.valueOf(resp);
 			System.out.println(resposta);
-			display.setText(resposta);
+			
+			int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
+			display.setText(resposta.substring(0, tamanho));
 		} else {
-			display.setText(resposta);
+			pontoIncluido = true;
+			int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
+			display.setText(resposta.substring(0, tamanho));
 		}		
 	}
 
 
 	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
 		String string = "";
-		for(char c : display.getText().toCharArray()) {
+		String texto = display.getText();
+		System.out.println(texto);
+		boolean operador = true;
+		for(char c : texto.toCharArray()) {
 			int hashCode = Character.hashCode(c);
 			// Se maior significa que é um numero
-			if(hashCode > 47 || hashCode == 46) {
+			if(hashCode > 47 || hashCode == 46 || operador) {
 				string += c;
+				operador = false;
 			} else {
 				listaNumeros.add(Double.parseDouble(string));
 				listaOperadores.add(c);
+				operador = true;
 				string = "";
 			}
 		}
@@ -376,7 +494,6 @@ public class CalculadoraPOG {
 	}
 
 	private double conta(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, int index) {
-		System.out.println(index);
 		double value1 = (double) listaNumeros.get(index);
 		double value2 = (double) listaNumeros.get(index + 1);
 		char operador = (char) listaOperadores.get(index);
