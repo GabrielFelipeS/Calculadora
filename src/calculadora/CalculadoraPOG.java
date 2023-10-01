@@ -17,7 +17,8 @@ public class CalculadoraPOG {
 	private boolean operadorOuPontoNoFim = false;
 	private boolean pontoIncluido = false;
 	private boolean numeroNegativo	= false;
-	
+	private int quantidadeParentesesAbertos = 0;
+	private int quantidadeParentesesFechados = 0;
 	private int qtdOperadores = 0;
 	
 	private JFrame janela 	  = new JFrame("Calculadora");
@@ -330,6 +331,7 @@ public class CalculadoraPOG {
 					display.setText( display.getText() + label );
 					operadorOuPontoNoFim = true;
 					pontoIncluido = false;
+					qtdOperadores++;
 				}
 			}
 
@@ -362,25 +364,83 @@ public class CalculadoraPOG {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String texto = display.getText();
-			
-				int tamanho = 0;
-				if(!texto.isEmpty()) {
-					tamanho = texto.length();
-					display.setText(texto.substring(0, tamanho - 1));
-					Character caractereFim = texto.substring(tamanho - 1).toCharArray()[0];
-					int hashCode = caractereFim.hashCode();
-					if(hashCode > 47 || hashCode == 46 ) {
-					
-					} else {
-					
-					}
-				}
+				display.setText("");
+				operadorOuPontoNoFim = false;
+				pontoIncluido = false;
+				numeroNegativo	= false;
+				qtdOperadores = 0;
 				
+//				String texto = display.getText();
+//			
+//				int tamanho = 0;
+//				if(!texto.isEmpty()) {
+//					tamanho = texto.length();
+//					
+//					display.setText(texto.substring(0, tamanho - 1));
+//					char[] arrayCaracter = texto.substring(tamanho - 2).toCharArray();
+//					Character caractereFim = arrayCaracter[0];
+//					int hashCode = caractereFim.hashCode();
+//					
+//					if(hashCode > 47 || hashCode == 46 ) {
+//					
+//					} else {
+//					
+//					}
+//				}
+//				
 			
 			}
 		});
 		
+		this.btnAberturaParenteses.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(qtdOperadores == 0) {
+					return;
+				}
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				if(operadorOuPontoNoFim) {	
+					String label = ((JButton) e.getSource()).getText();
+					display.setText( display.getText() + label );
+					operadorOuPontoNoFim = true;
+					pontoIncluido = false;
+					qtdOperadores++;
+					quantidadeParentesesAbertos++;
+				}
+//				if(!display.getText().endsWith("+")) {	
+//					String label = ((JButton) e.getSource()).getText();
+//					display.setText( display.getText() + label );
+//				}
+			}
+		});
+		
+		this.btnFechaduraParenteses.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(quantidadeParentesesAbertos < quantidadeParentesesFechados + 1) {
+					return;
+				}
+				
+				if(qtdOperadores > 0) {
+					numeroNegativo = true;
+				}
+				
+				if(!operadorOuPontoNoFim || !numeroNegativo) {	
+					String label = ((JButton) e.getSource()).getText();
+					display.setText( display.getText() + label );
+					pontoIncluido = false;
+					qtdOperadores++;
+					quantidadeParentesesFechados++;
+				}
+//				if(!display.getText().endsWith("+")) {	
+//					String label = ((JButton) e.getSource()).getText();
+//					display.setText( display.getText() + label );
+//				}
+			}
+		});
 		
 		this.btnIgual.addActionListener( new ActionListener() {
 			
@@ -397,46 +457,146 @@ public class CalculadoraPOG {
 	}
 	
 
+	
 	private void igual() {
-		if(operadorOuPontoNoFim) {
+		String teste = "9 + (9 + 9 + 9 + 9)";
+		//System.out.println(teste.replace("(9 + 9 + 9 + 9)", "36"));
+		
+		if(teste.indexOf('(') != -1) {
+			parentesesSolution(teste);
+		}
+		
+		if(operadorOuPontoNoFim || quantidadeParentesesAbertos > quantidadeParentesesFechados) {
 			return;
 		}
+		
+		String texto = display.getText();
+		System.out.println(texto.indexOf('('));
+		
+		
 		
 		ArrayList<Double> listaNumeros = new ArrayList<Double>();
 		ArrayList<Character> listaOperadores = new ArrayList<Character>();
 		dividirEntreArryas(listaNumeros, listaOperadores);
 		while(!listaOperadores.isEmpty()) {
-			indexOperadores(listaNumeros, listaOperadores);
+			int index = indexOperadores(listaNumeros, listaOperadores);
+			double conta = conta(listaNumeros, listaOperadores, index);
+			
+			if(!listaOperadores.isEmpty()) {
+				listaNumeros.set(index, conta);
+				listaNumeros.remove(index + 1);
+				listaOperadores.remove(index);
+			}
+			
 		}
 		
 		String resposta = Double.toString(listaNumeros.get(0));
 		System.out.println("Resposta: " + resposta);
+		
 		if(resposta.substring(resposta.indexOf('.') + 1).replace("0", "").length() == 0) {
 			int resp = Integer.parseInt(resposta.substring(0, resposta.indexOf('.')));
 			System.out.println(resp);
 			
 			resposta = String.valueOf(resp);
 			System.out.println(resposta);
-			
-			int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
-			display.setText(resposta.substring(0, tamanho));
 		} else {
-			pontoIncluido = true;
-			int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
-			display.setText(resposta.substring(0, tamanho));
-		}		
+			pontoIncluido = true;		
+		}	
+		
+		int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
+		display.setText(resposta.substring(0, tamanho));
 	}
 
+	/*private String parentesesSolution(String texto) {
+		int index = texto.indexOf('(');
+		if(index != -1) {
+			parentesesSolution(texto.substring(index + 1));
+			System.out.println(texto);
+		}
 
+		System.out.println("Conta: " + String.valueOf());
+		return null;
+	}*/
+
+	private String parentesesSolution(String texto) {
+		int index = texto.indexOf('(');
+		if(index != -1) {
+			String textoReplace = parentesesSolution(texto.substring(index + 1));
+			System.out.println("Texto: " + texto);
+			System.out.println("Texto replace: " + textoReplace);
+			//texto.replace(, 0)
+		}
+		
+		String textoConta = texto.substring(0 , texto.indexOf(')') );
+		System.out.println("Texto conta: " + textoConta);
+		
+		ArrayList<Double> listaNumeros = new ArrayList<Double>();
+		ArrayList<Character> listaOperadores = new ArrayList<Character>();
+		
+		dividirEntreArryas(listaNumeros, listaOperadores, textoConta);
+		while(!listaOperadores.isEmpty()) {
+			index = indexOperadores(listaNumeros, listaOperadores);
+			double conta = conta(listaNumeros, listaOperadores, index);
+			
+			if(!listaOperadores.isEmpty()) {
+				listaNumeros.set(index, conta);
+				listaNumeros.remove(index + 1);
+				listaOperadores.remove(index);
+			}
+		}
+		
+		System.out.println("Valor conta: " + String.valueOf(listaNumeros.get(0)));
+		textoConta = textoConta.replace(textoConta, String.valueOf(listaNumeros.get(0)));
+		System.out.println("Replace: " + textoConta);
+		return "(" + texto;
+	}
+
+	
+	/*private String parentesesSolution(ParentesesSolution solution) {
+		String texto = solution.indexZeroListaDeStringParaReplace();
+		int index = texto.indexOf('(');
+		if(index != -1) {
+			solution.setAdd(texto.substring(index + 1));
+			texto = parentesesSolution(solution);
+		}
+		
+		System.out.println("Texto salvo: " + solution.indexZeroListaDeStringParaReplace());
+		String textoConta = texto.substring(0 , texto.indexOf(')') );
+		System.out.println("Texto conta: " + textoConta);
+		
+		ArrayList<Double> listaNumeros = new ArrayList<Double>();
+		ArrayList<Character> listaOperadores = new ArrayList<Character>();
+		
+		dividirEntreArryas(listaNumeros, listaOperadores, textoConta);
+		while(!listaOperadores.isEmpty()) {
+			index = indexOperadores(listaNumeros, listaOperadores);
+			double conta = conta(listaNumeros, listaOperadores, index);
+			
+			if(!listaOperadores.isEmpty()) {
+				listaNumeros.set(index, conta);
+				listaNumeros.remove(index + 1);
+				listaOperadores.remove(index);
+			}
+		}
+		System.out.println("Valor conta: " + String.valueOf(listaNumeros.get(0)));
+		texto = texto.replace(texto, String.valueOf(listaNumeros.get(0)));
+		System.out.println("Replace: " + texto);
+		return texto;
+	}*/
 	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
+		dividirEntreArryas(listaNumeros, listaOperadores, display.getText());
+	}
+
+	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, String texto) {
 		String string = "";
-		String texto = display.getText();
+		//String texto = display.getText();
 		System.out.println(texto);
 		boolean operador = true;
 		for(char c : texto.toCharArray()) {
 			int hashCode = Character.hashCode(c);
+			//System.out.println(hashCode);
 			// Se maior significa que é um numero
-			if(hashCode > 47 || hashCode == 46 || operador) {
+			if((hashCode > 47 || hashCode == 46 || operador) && hashCode != 94) {
 				string += c;
 				operador = false;
 			} else {
@@ -459,14 +619,18 @@ public class CalculadoraPOG {
 		}
 	}
 	
-	private void indexOperadores(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
+	private int indexOperadores(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
+		int potenciaIndex = listaOperadores.indexOf('^');
 		int multIndex = listaOperadores.indexOf('*');
 		int divisaoIndex = listaOperadores.indexOf('/');
 		int somaIndex = listaOperadores.indexOf('+');
 		int subtracaoIndex = listaOperadores.indexOf('-');
 		int index;
 		
-		if(multIndex != -1 || divisaoIndex != -1) {
+		
+		if(potenciaIndex != -1) {
+			index = potenciaIndex;
+		} else if(multIndex != -1 || divisaoIndex != -1) {
 			if(multIndex != -1 && (multIndex < divisaoIndex || divisaoIndex == -1)) {
 				index = multIndex;
 			} else {
@@ -485,12 +649,7 @@ public class CalculadoraPOG {
 		System.out.println("SomaIndex: " +  somaIndex);
 		System.out.println("SubtracaoIndex: " + subtracaoIndex);
 		
-		double conta = conta(listaNumeros, listaOperadores, index);
-		if(!listaOperadores.isEmpty()) {
-			listaNumeros.set(index, conta);
-			listaNumeros.remove(index + 1);
-			listaOperadores.remove(index);
-		}
+		return index;
 	}
 
 	private double conta(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, int index) {
@@ -514,6 +673,8 @@ public class CalculadoraPOG {
 				return value1 - value2;
 			case '+':
 				return value1 + value2;
+			case '^':
+				return Math.pow(value1, value2);
 		}
 		
 		return 0;
