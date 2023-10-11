@@ -474,7 +474,6 @@ public class CalculadoraPOG {
 			display.setText(texto);
 		}
 		
-		
 		ArrayList<Double> listaNumeros = pendas();
 		
 		String resposta = resposta(listaNumeros);
@@ -488,23 +487,17 @@ public class CalculadoraPOG {
 		int indexParenteses = texto.indexOf("(");
 		String parenteses = null;
 		String resultado = null;
-		//System.out.println(texto);
 		
 		if(indexParenteses != -1) {
 			parenteses = texto.substring(indexParenteses + 1);
 			resultado = parentesesSolution(parenteses);
-			System.out.println(parenteses);
 			texto = texto.replace("(" + parenteses, resultado);
 			return texto;
 		}
 		
 		String fechamentoParenteses = texto.substring(0, texto.indexOf(")"));
-		//System.out.println(fechamentoParenteses);
-		//System.out.println("ta passando?");
 		
 		ArrayList<Double> listaNumeros = pendas(fechamentoParenteses);
-		
-		listaNumeros.forEach(v -> System.out.println(v));
 		
 		String resposta = resposta(listaNumeros);
 		
@@ -553,10 +546,6 @@ public class CalculadoraPOG {
 	
 		return resposta;
 	}
-
-	// 9 + (9+9 + (5 * 2))
-
-
 
 	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, String texto) {
 		String string = "";
