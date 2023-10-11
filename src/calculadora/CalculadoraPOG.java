@@ -467,7 +467,7 @@ public class CalculadoraPOG {
 		}
 		
 		String texto = display.getText();
-		System.out.println(texto);
+		System.err.println(texto);
 		
 		if(texto.indexOf('(') != -1) {
 			texto = parentesesSolution(texto);
@@ -475,13 +475,7 @@ public class CalculadoraPOG {
 		}
 		
 		
-		
-		System.out.println(texto.indexOf('('));
-		
 		ArrayList<Double> listaNumeros = pendas();
-		
-		
-		listaNumeros.forEach(v -> System.out.println(v));
 		
 		String resposta = resposta(listaNumeros);
 		
