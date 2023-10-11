@@ -459,25 +459,75 @@ public class CalculadoraPOG {
 
 	
 	private void igual() {
-		String teste = "9 + (9 + 9 + 9 + 9)";
-		//System.out.println(teste.replace("(9 + 9 + 9 + 9)", "36"));
 		
-		if(teste.indexOf('(') != -1) {
-			parentesesSolution(teste);
-		}
+		//System.out.println(teste.replace("(9 + 9 + 9 + 9)", "36"));
 		
 		if(operadorOuPontoNoFim || quantidadeParentesesAbertos > quantidadeParentesesFechados) {
 			return;
 		}
 		
 		String texto = display.getText();
+		System.out.println(texto);
+		
+		if(texto.indexOf('(') != -1) {
+			texto = parentesesSolution(texto);
+			display.setText(texto);
+		}
+		
+		
+		
 		System.out.println(texto.indexOf('('));
 		
+		ArrayList<Double> listaNumeros = pendas();
 		
 		
+		listaNumeros.forEach(v -> System.out.println(v));
+		
+		String resposta = resposta(listaNumeros);
+		
+		int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
+		display.setText(resposta.substring(0, tamanho));
+	}
+	
+	//9+(9+9+(5*2))
+	private String parentesesSolution(String texto) {
+		int indexParenteses = texto.indexOf("(");
+		String parenteses = null;
+		String resultado = null;
+		//System.out.println(texto);
+		
+		if(indexParenteses != -1) {
+			parenteses = texto.substring(indexParenteses + 1);
+			resultado = parentesesSolution(parenteses);
+			System.out.println(parenteses);
+			texto = texto.replace("(" + parenteses, resultado);
+			return texto;
+		}
+		
+		String fechamentoParenteses = texto.substring(0, texto.indexOf(")"));
+		//System.out.println(fechamentoParenteses);
+		//System.out.println("ta passando?");
+		
+		ArrayList<Double> listaNumeros = pendas(fechamentoParenteses);
+		
+		listaNumeros.forEach(v -> System.out.println(v));
+		
+		String resposta = resposta(listaNumeros);
+		
+		int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
+		
+		return resposta.substring(0, tamanho);
+	}
+	
+	private ArrayList<Double> pendas() {
+		return pendas(display.getText());
+	}
+
+	
+	private ArrayList<Double> pendas(String texto) {
 		ArrayList<Double> listaNumeros = new ArrayList<Double>();
 		ArrayList<Character> listaOperadores = new ArrayList<Character>();
-		dividirEntreArryas(listaNumeros, listaOperadores);
+		dividirEntreArryas(listaNumeros, listaOperadores, texto);
 		while(!listaOperadores.isEmpty()) {
 			int index = indexOperadores(listaNumeros, listaOperadores);
 			double conta = conta(listaNumeros, listaOperadores, index);
@@ -490,6 +540,10 @@ public class CalculadoraPOG {
 			
 		}
 		
+		return listaNumeros;
+	}
+
+	String resposta(ArrayList<Double> listaNumeros) {
 		String resposta = Double.toString(listaNumeros.get(0));
 		System.out.println("Resposta: " + resposta);
 		
@@ -502,95 +556,18 @@ public class CalculadoraPOG {
 		} else {
 			pontoIncluido = true;		
 		}	
-		
-		int tamanho = (resposta.length() <= 13)? resposta.length() : 13;
-		display.setText(resposta.substring(0, tamanho));
-	}
-
-	/*private String parentesesSolution(String texto) {
-		int index = texto.indexOf('(');
-		if(index != -1) {
-			parentesesSolution(texto.substring(index + 1));
-			System.out.println(texto);
-		}
-
-		System.out.println("Conta: " + String.valueOf());
-		return null;
-	}*/
-
-	private String parentesesSolution(String texto) {
-		int index = texto.indexOf('(');
-		if(index != -1) {
-			String textoReplace = parentesesSolution(texto.substring(index + 1));
-			System.out.println("Texto: " + texto);
-			System.out.println("Texto replace: " + textoReplace);
-			//texto.replace(, 0)
-		}
-		
-		String textoConta = texto.substring(0 , texto.indexOf(')') );
-		System.out.println("Texto conta: " + textoConta);
-		
-		ArrayList<Double> listaNumeros = new ArrayList<Double>();
-		ArrayList<Character> listaOperadores = new ArrayList<Character>();
-		
-		dividirEntreArryas(listaNumeros, listaOperadores, textoConta);
-		while(!listaOperadores.isEmpty()) {
-			index = indexOperadores(listaNumeros, listaOperadores);
-			double conta = conta(listaNumeros, listaOperadores, index);
-			
-			if(!listaOperadores.isEmpty()) {
-				listaNumeros.set(index, conta);
-				listaNumeros.remove(index + 1);
-				listaOperadores.remove(index);
-			}
-		}
-		
-		System.out.println("Valor conta: " + String.valueOf(listaNumeros.get(0)));
-		textoConta = textoConta.replace(textoConta, String.valueOf(listaNumeros.get(0)));
-		System.out.println("Replace: " + textoConta);
-		return "(" + texto;
-	}
-
 	
-	/*private String parentesesSolution(ParentesesSolution solution) {
-		String texto = solution.indexZeroListaDeStringParaReplace();
-		int index = texto.indexOf('(');
-		if(index != -1) {
-			solution.setAdd(texto.substring(index + 1));
-			texto = parentesesSolution(solution);
-		}
-		
-		System.out.println("Texto salvo: " + solution.indexZeroListaDeStringParaReplace());
-		String textoConta = texto.substring(0 , texto.indexOf(')') );
-		System.out.println("Texto conta: " + textoConta);
-		
-		ArrayList<Double> listaNumeros = new ArrayList<Double>();
-		ArrayList<Character> listaOperadores = new ArrayList<Character>();
-		
-		dividirEntreArryas(listaNumeros, listaOperadores, textoConta);
-		while(!listaOperadores.isEmpty()) {
-			index = indexOperadores(listaNumeros, listaOperadores);
-			double conta = conta(listaNumeros, listaOperadores, index);
-			
-			if(!listaOperadores.isEmpty()) {
-				listaNumeros.set(index, conta);
-				listaNumeros.remove(index + 1);
-				listaOperadores.remove(index);
-			}
-		}
-		System.out.println("Valor conta: " + String.valueOf(listaNumeros.get(0)));
-		texto = texto.replace(texto, String.valueOf(listaNumeros.get(0)));
-		System.out.println("Replace: " + texto);
-		return texto;
-	}*/
-	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores) {
-		dividirEntreArryas(listaNumeros, listaOperadores, display.getText());
+		return resposta;
 	}
+
+	// 9 + (9+9 + (5 * 2))
+
+
 
 	private void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, String texto) {
 		String string = "";
 		//String texto = display.getText();
-		System.out.println(texto);
+		//System.out.println(texto);
 		boolean operador = true;
 		for(char c : texto.toCharArray()) {
 			int hashCode = Character.hashCode(c);
