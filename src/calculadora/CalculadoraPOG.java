@@ -460,8 +460,6 @@ public class CalculadoraPOG {
 	
 	private void igual() {
 		
-		//System.out.println(teste.replace("(9 + 9 + 9 + 9)", "36"));
-		
 		if(operadorOuPontoNoFim || quantidadeParentesesAbertos > quantidadeParentesesFechados) {
 			return;
 		}
