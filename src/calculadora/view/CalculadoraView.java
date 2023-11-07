@@ -43,8 +43,6 @@ public class CalculadoraView {
 	private JButton btnAberturaParenteses   = new JButton("(");
 	private JButton btnFechaduraParenteses   = new JButton(")");
 	
-	
-	
 	public CalculadoraView() {
 		calculadora = new CalculadoraController(display); 
 		
@@ -189,6 +187,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				display.setText("");
 				calculadora.limpar();
 			}
 		});

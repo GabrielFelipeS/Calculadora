@@ -1,10 +1,8 @@
 package calculadora.controller;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import calculadora.modelo.Conta;
@@ -13,7 +11,7 @@ public class CalculadoraController {
 
 	private boolean operadorOuPontoNoFim = false;
 	private boolean pontoIncluido = false;
-	private boolean numeroNegativo	= false;
+	private boolean possibilidadeDeNumeroNegativo	= false;
 	private int quantidadeParentesesAbertos = 0;
 	private int quantidadeParentesesFechados = 0;
 	private int qtdOperadores = 0;
@@ -28,38 +26,35 @@ public class CalculadoraController {
 		String label = ((JButton) e.getSource()).getText();
 		display.setText( display.getText() + label );
 		operadorOuPontoNoFim = false;
-		numeroNegativo = false;
+		possibilidadeDeNumeroNegativo = false;
 		qtdOperadores = 0;
 	}
 	
 	public void adicionarOperador(ActionEvent e) {
 		if(qtdOperadores > 0) {
-			numeroNegativo = true;
+			possibilidadeDeNumeroNegativo = true;
 		}
 		
-		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+		if(!operadorOuPontoNoFim || !possibilidadeDeNumeroNegativo) {	
 			String label = ((JButton) e.getSource()).getText();
-			display.setText( display.getText() + label );
+			display.setText( display.getText() + label );	
 			operadorOuPontoNoFim = true;
 			pontoIncluido = false;
 			qtdOperadores++;
 		}
 	}
 	public void adicionarOperadorDeSubtracao(ActionEvent e) {
+		
 		if(qtdOperadores == 1) {
-			numeroNegativo = false;
+			possibilidadeDeNumeroNegativo = false;
 		}
 		
-		if(pontoIncluido) {
-			return;
-		}
-		
-		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+		if(!operadorOuPontoNoFim || !possibilidadeDeNumeroNegativo) {	
 			String label = ((JButton) e.getSource()).getText();
 			display.setText( display.getText() + label );
 			operadorOuPontoNoFim = true;
 			pontoIncluido = false;
-			numeroNegativo = true;
+			possibilidadeDeNumeroNegativo = true;
 			qtdOperadores++;
 		}
 	}
@@ -70,7 +65,7 @@ public class CalculadoraController {
 		}
 		
 		if(qtdOperadores > 0) {
-			numeroNegativo = true;
+			possibilidadeDeNumeroNegativo = true;
 		}
 		
 		if(operadorOuPontoNoFim) {	
@@ -89,10 +84,10 @@ public class CalculadoraController {
 		}
 		
 		if(qtdOperadores > 0) {
-			numeroNegativo = true;
+			possibilidadeDeNumeroNegativo = true;
 		}
 		
-		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+		if(!operadorOuPontoNoFim || !possibilidadeDeNumeroNegativo) {	
 			String label = ((JButton) e.getSource()).getText();
 			display.setText( display.getText() + label );
 			pontoIncluido = false;
@@ -100,27 +95,26 @@ public class CalculadoraController {
 			quantidadeParentesesFechados++;
 		}
 	}
+	
 	public void adicionarPonto(ActionEvent e) {
-		if(!operadorOuPontoNoFim && !pontoIncluido) {	
+		if(!pontoIncluido) {	
 			String label = ((JButton) e.getSource()).getText();
 			
-			if(display.getText().isEmpty()) {
+			if(display.getText().isEmpty() || operadorOuPontoNoFim) {
 				label = "0" + label;
 			}
-				
-			
+
 			display.setText( display.getText() + label );
 			pontoIncluido = true;
 			operadorOuPontoNoFim = true;
-			numeroNegativo = true;
+			possibilidadeDeNumeroNegativo = true;
 		}
 	}
 	
 	public void limpar() {
-		display.setText("");
 		operadorOuPontoNoFim = false;
 		pontoIncluido = false;
-		numeroNegativo	= false;
+		possibilidadeDeNumeroNegativo	= false;
 		qtdOperadores = 0;
 	}
 	
@@ -144,5 +138,13 @@ public class CalculadoraController {
 		
 		return substring;
 	}
-	
+
+	void viewDadosControle() {
+		System.out.println("operadorOuPontoNoFim: " + operadorOuPontoNoFim);
+		System.out.println("pontoIncluido: " + pontoIncluido);
+		System.out.println("possibilidadeDeNumeroNegativo: " + possibilidadeDeNumeroNegativo);
+		System.out.println("quantidadeParentesesAbertos: " + quantidadeParentesesAbertos);
+		System.out.println("quantidadeParentesesFechados: " + quantidadeParentesesFechados);
+		System.out.println("qtdOperadores: " + qtdOperadores);
+	}
 }
