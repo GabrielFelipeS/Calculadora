@@ -142,83 +142,47 @@ public class CalculadoraView {
 		});
 		this.btn1.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn2.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn3.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn4.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn5.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn6.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn7.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn8.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn9.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		
