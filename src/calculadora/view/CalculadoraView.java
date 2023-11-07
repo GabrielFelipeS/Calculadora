@@ -137,11 +137,7 @@ public class CalculadoraView {
 		
 		this.btn0.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String label = ((JButton) e.getSource()).getText();
-				display.setText( display.getText() + label );
-				operadorOuPontoNoFim = false;
-				numeroNegativo = false;
-				qtdOperadores = 0;
+				calculadora.adicionandoNumero(e);
 			}
 		});
 		this.btn1.addActionListener( new ActionListener() {
@@ -280,21 +276,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					qtdOperadores++;
-				}
-//				if(!display.getText().endsWith("+")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.adicionandoOperador(e);
 			}
 		});
 		
@@ -403,50 +385,14 @@ public class CalculadoraView {
 		this.btnAberturaParenteses.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores == 0) {
-					return;
-				}
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				if(operadorOuPontoNoFim) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					qtdOperadores++;
-					quantidadeParentesesAbertos++;
-				}
-//				if(!display.getText().endsWith("+")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.abrirParenteses(e);
 			}
 		});
 		
 		this.btnFechaduraParenteses.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(quantidadeParentesesAbertos < quantidadeParentesesFechados + 1) {
-					return;
-				}
-				
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					pontoIncluido = false;
-					qtdOperadores++;
-					quantidadeParentesesFechados++;
-				}
-//				if(!display.getText().endsWith("+")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.fecharParenteses(e);
 			}
 		});
 		

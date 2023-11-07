@@ -1,7 +1,9 @@
 package calculadora.controller;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -19,9 +21,62 @@ public class CalculadoraController {
 		this.display = display;
 	}
 	
+	public void adicionandoNumero(ActionEvent e) {
+		String label = ((JButton) e.getSource()).getText();
+		display.setText( display.getText() + label );
+		operadorOuPontoNoFim = false;
+		numeroNegativo = false;
+		qtdOperadores = 0;
+	}
 	
-	public void fecharParenteses() {
+	public void adicionandoOperador(ActionEvent e) {
+		if(qtdOperadores > 0) {
+			numeroNegativo = true;
+		}
 		
+		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+			String label = ((JButton) e.getSource()).getText();
+			display.setText( display.getText() + label );
+			operadorOuPontoNoFim = true;
+			pontoIncluido = false;
+			qtdOperadores++;
+		}
+	}
+	
+	public void abrirParenteses(ActionEvent e) {
+		if(qtdOperadores == 0) {
+			return;
+		}
+		if(qtdOperadores > 0) {
+			numeroNegativo = true;
+		}
+		
+		if(operadorOuPontoNoFim) {	
+			String label = ((JButton) e.getSource()).getText();
+			display.setText( display.getText() + label );
+			operadorOuPontoNoFim = true;
+			pontoIncluido = false;
+			qtdOperadores++;
+			quantidadeParentesesAbertos++;
+		}
+	}
+	
+	public void fecharParenteses(ActionEvent e) {
+		if(quantidadeParentesesAbertos < quantidadeParentesesFechados + 1) {
+			return;
+		}
+		
+		if(qtdOperadores > 0) {
+			numeroNegativo = true;
+		}
+		
+		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+			String label = ((JButton) e.getSource()).getText();
+			display.setText( display.getText() + label );
+			pontoIncluido = false;
+			qtdOperadores++;
+			quantidadeParentesesFechados++;
+		}
 	}
 	
 	
@@ -47,7 +102,6 @@ public class CalculadoraController {
 		display.setText(resposta.substring(0, tamanho));
 	}
 	
-	//9+(9+9+(5*2))
 	private String parentesesSolution(String texto) {
 		int indexParenteses = texto.indexOf("(");
 		String parenteses = null;
@@ -204,6 +258,5 @@ public class CalculadoraController {
 		
 		return 0;
 	}
-
 	
 }
