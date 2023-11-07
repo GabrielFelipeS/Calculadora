@@ -26,6 +26,7 @@ public class CalculadoraController {
 	}
 	
 	public void adicionandoNumero(ActionEvent e) {
+
 		String label = ((JButton) e.getSource()).getText();
 		display.setText( display.getText() + label );
 		operadorOuPontoNoFim = false;

@@ -44,8 +44,19 @@ public class CalculadoraView {
 	private JButton btnFechaduraParenteses   = new JButton(")");
 	
 	public CalculadoraView() {
+		construtor();
+	}
+	
+	
+	CalculadoraView(JTextField display) {
+		this.display = display;
+		construtor();
+	}
+	
+	// Dessa forma eu posso injetar um display e ter controle dele fora da classe
+	// Facilitando a criação de testes
+	private void construtor() {
 		calculadora = new CalculadoraController(display); 
-		
 		
 		this.janela.setBounds(200, 200, 400, 600);
 		this.janela.setLayout(null);
