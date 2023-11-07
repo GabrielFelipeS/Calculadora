@@ -18,7 +18,6 @@ public class CalculadoraController {
 	private int quantidadeParentesesFechados = 0;
 	private int qtdOperadores = 0;
 	
-	
 	private JTextField display;
 	
 	public CalculadoraController(JTextField display) {
