@@ -79,54 +79,12 @@ public class CalculadoraView {
 				(int) (this.janela.getHeight()*0.80)  
 			);
 		
-		
-		this.btn7.setFont(defaultFont);
-		this.btn8.setFont(defaultFont);
-		this.btn9.setFont(defaultFont);
-		this.btnSoma.setFont(defaultFont);
-		this.btn4.setFont(defaultFont);
-		this.btn5.setFont(defaultFont);
-		this.btn6.setFont(defaultFont);
-		this.btnSubtr.setFont(defaultFont);
-		this.btn1.setFont(defaultFont);
-		this.btn2.setFont(defaultFont);
-		this.btn3.setFont(defaultFont);
-		this.btnMulti.setFont(defaultFont);
-		this.btn0.setFont(defaultFont);
-		this.btnPonto.setFont(defaultFont);
-		this.btnIgual.setFont(defaultFont);
-		this.btnDiv.setFont(defaultFont);
-		this.btnLimpar.setFont(defaultFont);
-		this.btnPotencia.setFont(defaultFont);
-		this.btnAberturaParenteses.setFont(defaultFont);
-		this.btnFechaduraParenteses.setFont(defaultFont);
-		
+		setandoFontes(defaultFont);
 		
 		this.pnlButtons.setBackground(Color.RED);
 		this.pnlButtons.setLayout(new GridLayout(5,4));
 
-		this.pnlButtons.add(btnLimpar);	
-		this.pnlButtons.add(btnPotencia);	
-		this.pnlButtons.add(btnAberturaParenteses);	
-		this.pnlButtons.add(btnFechaduraParenteses);	
-		this.pnlButtons.add(btn7);
-		this.pnlButtons.add(btn8);
-		this.pnlButtons.add(btn9);
-		this.pnlButtons.add(btnSoma);
-		this.pnlButtons.add(btn4);
-		this.pnlButtons.add(btn5);
-		this.pnlButtons.add(btn6);
-		this.pnlButtons.add(btnSubtr);
-		this.pnlButtons.add(btn1);
-		this.pnlButtons.add(btn2);
-		this.pnlButtons.add(btn3);
-		this.pnlButtons.add(btnMulti);
-		this.pnlButtons.add(btn0);
-		this.pnlButtons.add(btnPonto);
-		this.pnlButtons.add(btnIgual);
-		this.pnlButtons.add(btnDiv);	
-		
-		
+		adicionandoBotoesNoPainelDeBotoes();
 		
 		this.btn0.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -252,11 +210,60 @@ public class CalculadoraView {
 		this.btnIgual.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				calculadora.igual();
+				String contaResultande = calculadora.igual();
+				display.setText(contaResultande);
 			}
 		});
 		
 		this.janela.add( this.pnlButtons );
 		this.janela.setVisible(true);
+	}
+
+
+
+	private void adicionandoBotoesNoPainelDeBotoes() {
+		this.pnlButtons.add(btnLimpar);	
+		this.pnlButtons.add(btnPotencia);	
+		this.pnlButtons.add(btnAberturaParenteses);	
+		this.pnlButtons.add(btnFechaduraParenteses);	
+		this.pnlButtons.add(btn7);
+		this.pnlButtons.add(btn8);
+		this.pnlButtons.add(btn9);
+		this.pnlButtons.add(btnSoma);
+		this.pnlButtons.add(btn4);
+		this.pnlButtons.add(btn5);
+		this.pnlButtons.add(btn6);
+		this.pnlButtons.add(btnSubtr);
+		this.pnlButtons.add(btn1);
+		this.pnlButtons.add(btn2);
+		this.pnlButtons.add(btn3);
+		this.pnlButtons.add(btnMulti);
+		this.pnlButtons.add(btn0);
+		this.pnlButtons.add(btnPonto);
+		this.pnlButtons.add(btnIgual);
+		this.pnlButtons.add(btnDiv);	
+	}
+
+	private void setandoFontes(Font defaultFont) {
+		this.btn7.setFont(defaultFont);
+		this.btn8.setFont(defaultFont);
+		this.btn9.setFont(defaultFont);
+		this.btnSoma.setFont(defaultFont);
+		this.btn4.setFont(defaultFont);
+		this.btn5.setFont(defaultFont);
+		this.btn6.setFont(defaultFont);
+		this.btnSubtr.setFont(defaultFont);
+		this.btn1.setFont(defaultFont);
+		this.btn2.setFont(defaultFont);
+		this.btn3.setFont(defaultFont);
+		this.btnMulti.setFont(defaultFont);
+		this.btn0.setFont(defaultFont);
+		this.btnPonto.setFont(defaultFont);
+		this.btnIgual.setFont(defaultFont);
+		this.btnDiv.setFont(defaultFont);
+		this.btnLimpar.setFont(defaultFont);
+		this.btnPotencia.setFont(defaultFont);
+		this.btnAberturaParenteses.setFont(defaultFont);
+		this.btnFechaduraParenteses.setFont(defaultFont);
 	}
 }
