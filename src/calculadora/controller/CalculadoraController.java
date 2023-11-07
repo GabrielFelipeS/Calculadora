@@ -15,6 +15,7 @@ public class CalculadoraController {
 	private int quantidadeParentesesAbertos = 0;
 	private int quantidadeParentesesFechados = 0;
 	private int qtdOperadores = 0;
+	
 	private JTextField display;
 	
 	public CalculadoraController(JTextField display) {
@@ -29,7 +30,7 @@ public class CalculadoraController {
 		qtdOperadores = 0;
 	}
 	
-	public void adicionandoOperador(ActionEvent e) {
+	public void adicionarOperador(ActionEvent e) {
 		if(qtdOperadores > 0) {
 			numeroNegativo = true;
 		}
@@ -42,11 +43,30 @@ public class CalculadoraController {
 			qtdOperadores++;
 		}
 	}
+	public void adicionarOperadorDeSubtracao(ActionEvent e) {
+		if(qtdOperadores == 1) {
+			numeroNegativo = false;
+		}
+		
+		if(pontoIncluido) {
+			return;
+		}
+		
+		if(!operadorOuPontoNoFim || !numeroNegativo) {	
+			String label = ((JButton) e.getSource()).getText();
+			display.setText( display.getText() + label );
+			operadorOuPontoNoFim = true;
+			pontoIncluido = false;
+			numeroNegativo = true;
+			qtdOperadores++;
+		}
+	}
 	
-	public void abrirParenteses(ActionEvent e) {
+	public void adicionarAberturaParenteses(ActionEvent e) {
 		if(qtdOperadores == 0) {
 			return;
 		}
+		
 		if(qtdOperadores > 0) {
 			numeroNegativo = true;
 		}
@@ -61,7 +81,7 @@ public class CalculadoraController {
 		}
 	}
 	
-	public void fecharParenteses(ActionEvent e) {
+	public void adicionarFechamentoParenteses(ActionEvent e) {
 		if(quantidadeParentesesAbertos < quantidadeParentesesFechados + 1) {
 			return;
 		}
@@ -78,7 +98,29 @@ public class CalculadoraController {
 			quantidadeParentesesFechados++;
 		}
 	}
+	public void adicionarPonto(ActionEvent e) {
+		if(!operadorOuPontoNoFim && !pontoIncluido) {	
+			String label = ((JButton) e.getSource()).getText();
+			
+			if(display.getText().isEmpty()) {
+				label = "0" + label;
+			}
+				
+			
+			display.setText( display.getText() + label );
+			pontoIncluido = true;
+			operadorOuPontoNoFim = true;
+			numeroNegativo = true;
+		}
+	}
 	
+	public void limpar() {
+		display.setText("");
+		operadorOuPontoNoFim = false;
+		pontoIncluido = false;
+		numeroNegativo	= false;
+		qtdOperadores = 0;
+	}
 	
 	public void igual() {
 		
@@ -258,5 +300,5 @@ public class CalculadoraController {
 		
 		return 0;
 	}
-	
+
 }

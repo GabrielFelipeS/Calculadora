@@ -15,14 +15,7 @@ import javax.swing.JTextField;
 
 import calculadora.controller.CalculadoraController;
 
-public class CalculadoraView {
-	private boolean operadorOuPontoNoFim = false;
-	private boolean pontoIncluido = false;
-	private boolean numeroNegativo	= false;
-	private int quantidadeParentesesAbertos = 0;
-	private int quantidadeParentesesFechados = 0;
-	private int qtdOperadores = 0;
-	
+public class CalculadoraView {	
 	private CalculadoraController calculadora;
 	
 	private JFrame janela 	  = new JFrame("Calculadora");
@@ -188,25 +181,7 @@ public class CalculadoraView {
 		
 		this.btnPonto.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				if(!operadorOuPontoNoFim && !pontoIncluido) {	
-					String label = ((JButton) e.getSource()).getText();
-					
-					if(display.getText().isEmpty()) {
-						label = "0" + label;
-					}
-						
-					
-					display.setText( display.getText() + label );
-					pontoIncluido = true;
-					operadorOuPontoNoFim = true;
-					numeroNegativo = true;
-				}
-//				if (display.getText().indexOf(".") < 0) {
-//				String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.adicionarPonto(e);
 			}
 		});
 
@@ -214,25 +189,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					qtdOperadores++;
-				}
-//				if(!display.getText().endsWith("*")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
-
-				
-				
+				calculadora.adicionarOperador(e);
 			}
 		});
 		
@@ -240,7 +197,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoOperador(e);
+				calculadora.adicionarOperador(e);
 			}
 		});
 		
@@ -248,27 +205,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores == 1) {
-					numeroNegativo = false;
-				}
-				
-				if(pontoIncluido) {
-					return;
-				}
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					numeroNegativo = true;
-					qtdOperadores++;
-				}
-				
-//				if(!display.getText().endsWith("-")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.adicionarOperadorDeSubtracao(e);
 			}
 		});
 		
@@ -276,17 +213,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					qtdOperadores++;
-				}
+				calculadora.adicionarOperador(e);
 			}
 
 
@@ -296,21 +223,7 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(qtdOperadores > 0) {
-					numeroNegativo = true;
-				}
-				
-				if(!operadorOuPontoNoFim || !numeroNegativo) {	
-					String label = ((JButton) e.getSource()).getText();
-					display.setText( display.getText() + label );
-					operadorOuPontoNoFim = true;
-					pontoIncluido = false;
-					qtdOperadores++;
-				}
-//				if(!display.getText().endsWith("+")) {	
-//					String label = ((JButton) e.getSource()).getText();
-//					display.setText( display.getText() + label );
-//				}
+				calculadora.adicionarOperador(e);
 			}
 		});
 		
@@ -318,45 +231,21 @@ public class CalculadoraView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				display.setText("");
-				operadorOuPontoNoFim = false;
-				pontoIncluido = false;
-				numeroNegativo	= false;
-				qtdOperadores = 0;
-				
-//				String texto = display.getText();
-//			
-//				int tamanho = 0;
-//				if(!texto.isEmpty()) {
-//					tamanho = texto.length();
-//					
-//					display.setText(texto.substring(0, tamanho - 1));
-//					char[] arrayCaracter = texto.substring(tamanho - 2).toCharArray();
-//					Character caractereFim = arrayCaracter[0];
-//					int hashCode = caractereFim.hashCode();
-//					
-//					if(hashCode > 47 || hashCode == 46 ) {
-//					
-//					} else {
-//					
-//					}
-//				}
-//				
-			
+				calculadora.limpar();
 			}
 		});
 		
 		this.btnAberturaParenteses.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				calculadora.abrirParenteses(e);
+				calculadora.adicionarAberturaParenteses(e);
 			}
 		});
 		
 		this.btnFechaduraParenteses.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				calculadora.fecharParenteses(e);
+				calculadora.adicionarFechamentoParenteses(e);
 			}
 		});
 		
