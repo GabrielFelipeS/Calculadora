@@ -159,14 +159,14 @@ public class CalculadoraController {
 		return substring;
 	}
 
-	void viewDadosControle() {
-		System.out.println("==============================================");
-		System.out.println(display.getText());
-		System.out.println("operadorOuPontoNoFim: " + operadorOuPontoNoFim);
-		System.out.println("pontoIncluido: " + pontoIncluido);
-		System.out.println("possibilidadeDeNumeroNegativo: " + possibilidadeDeNumeroNegativo);
-		System.out.println("quantidadeParentesesAbertos: " + quantidadeParentesesAbertos);
-		System.out.println("quantidadeParentesesFechados: " + quantidadeParentesesFechados);
-		System.out.println("qtdOperadores: " + qtdOperadores);
-	}
+//	void viewDadosControle() {
+//		System.out.println("==============================================");
+//		System.out.println(display.getText());
+//		System.out.println("operadorOuPontoNoFim: " + operadorOuPontoNoFim);
+//		System.out.println("pontoIncluido: " + pontoIncluido);
+//		System.out.println("possibilidadeDeNumeroNegativo: " + possibilidadeDeNumeroNegativo);
+//		System.out.println("quantidadeParentesesAbertos: " + quantidadeParentesesAbertos);
+//		System.out.println("quantidadeParentesesFechados: " + quantidadeParentesesFechados);
+//		System.out.println("qtdOperadores: " + qtdOperadores);
+//	}
 }
