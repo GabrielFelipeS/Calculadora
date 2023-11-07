@@ -93,12 +93,11 @@ public class Conta {
 
 	void dividirEntreArryas(ArrayList<Double> listaNumeros, ArrayList<Character> listaOperadores, String texto) {
 		String string = "";
-		//String texto = display.getText();
-		//System.out.println(texto);
+
 		boolean operador = true;
 		for(char c : texto.toCharArray()) {
 			int hashCode = Character.hashCode(c);
-			//System.out.println(hashCode);
+
 			// Se maior significa que é um numero
 			if((hashCode > 47 || hashCode == 46 || operador) && hashCode != 94) {
 				string += c;
@@ -148,11 +147,12 @@ public class Conta {
 			}
 		}
 		
+		/*
 		System.out.println("\nMultiIndex: " +  multIndex);
 		System.out.println("DivIndex: " + divisaoIndex);
 		System.out.println("SomaIndex: " +  somaIndex);
 		System.out.println("SubtracaoIndex: " + subtracaoIndex);
-		
+		*/
 		return index;
 	}
 

@@ -63,7 +63,7 @@ public class CalculadoraController {
 		}
 		
 		if(!operadorOuPontoNoFim || !possibilidadeDeNumeroNegativo ) {
-			//System.err.println("TESTE");
+
 			String label = ((JButton) e.getSource()).getText();
 			display.setText( display.getText() + label );
 			
