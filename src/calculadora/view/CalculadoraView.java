@@ -1,4 +1,4 @@
-package calculadora;
+package calculadora.view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CalculadoraPOG {
+public class CalculadoraView {
 	private boolean operadorOuPontoNoFim = false;
 	private boolean pontoIncluido = false;
 	private boolean numeroNegativo	= false;
@@ -46,7 +46,7 @@ public class CalculadoraPOG {
 	private JButton btnAberturaParenteses   = new JButton("(");
 	private JButton btnFechaduraParenteses   = new JButton(")");
 	
-	public CalculadoraPOG() {
+	public CalculadoraView() {
 
 		this.janela.setBounds(200, 200, 400, 600);
 		this.janela.setLayout(null);
