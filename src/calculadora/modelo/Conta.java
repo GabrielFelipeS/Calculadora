@@ -14,7 +14,6 @@ public class Conta {
 
 	public String resolverConta() {
 		String texto = display.getText();
-		System.err.println(texto);
 		
 		if(texto.indexOf('(') != -1) {
 			texto = parentesesSolution(texto);
@@ -77,15 +76,12 @@ public class Conta {
 
 	String resposta(ArrayList<Double> listaNumeros) {
 		String resposta = Double.toString(listaNumeros.get(0));
-		System.out.println("Resposta: " + resposta);
 		
 		if(resposta.substring(resposta.indexOf('.') + 1).replace("0", "").length() == 0) {
 			int resp = Integer.parseInt(resposta.substring(0, resposta.indexOf('.')));
 			System.out.println(resp);
 			
-			resposta = String.valueOf(resp);
-			System.out.println(resposta);
-			
+			resposta = String.valueOf(resp);		
 		} 
 	
 		return resposta;
@@ -147,12 +143,12 @@ public class Conta {
 			}
 		}
 		
-		/*
+		
 		System.out.println("\nMultiIndex: " +  multIndex);
 		System.out.println("DivIndex: " + divisaoIndex);
 		System.out.println("SomaIndex: " +  somaIndex);
 		System.out.println("SubtracaoIndex: " + subtracaoIndex);
-		*/
+		System.out.println("PotenciaIndex: " + potenciaIndex);
 		return index;
 	}
 
@@ -167,8 +163,8 @@ public class Conta {
 				return value1 * value2;
 			case '/':
 				if(value2 == 0) {
-					JOptionPane.showMessageDialog(null, "Encontramos uma divisão por 0, por favor faça outra conta", "Divisao por zero", JOptionPane.WARNING_MESSAGE);
-					display.setText("");
+					//JOptionPane.showMessageDialog(null, "Encontramos uma divisão por 0, por favor faça outra conta", "Divisao por zero", JOptionPane.WARNING_MESSAGE);
+					display.setText("5");
 					listaOperadores.removeAll(listaOperadores);
 					return 0;
 				}

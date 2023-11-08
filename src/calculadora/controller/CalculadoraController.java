@@ -24,7 +24,7 @@ public class CalculadoraController {
 		this.display = display;
 	}
 	
-	public void adicionandoNumero(ActionEvent e) {
+	public void adicionarNumero(ActionEvent e) {
 
 		String label = ((JButton) e.getSource()).getText();
 		display.setText( display.getText() + label );

@@ -97,52 +97,52 @@ public class CalculadoraView {
 		
 		this.btn0.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn1.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn2.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn3.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn4.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn5.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn6.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn7.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn8.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		this.btn9.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calculadora.adicionandoNumero(e);
+				calculadora.adicionarNumero(e);
 			}
 		});
 		
@@ -275,5 +275,9 @@ public class CalculadoraView {
 		this.btnPotencia.setFont(defaultFont);
 		this.btnAberturaParenteses.setFont(defaultFont);
 		this.btnFechaduraParenteses.setFont(defaultFont);
+	}
+	
+	public String toString() {
+		return display.getText();
 	}
 }
